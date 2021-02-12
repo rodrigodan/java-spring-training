@@ -51,7 +51,7 @@
 						<td th:text="${aluno.nome}"></td>
 						<td th:text="${aluno.email}"></td>
 						<td th:text="${aluno.nota}"></td>
-						<td><a th:href="@{/alunos/${aluno.id}}" class="btn btn-danger">Delete</a></td>
+						<td><a th:href="|@{/alunos/${aluno.id}}|" class="btn btn-danger">Delete</a></td>
 						<!-- <td><a th:href="@{/alunos/${aluno.id}}" class="btn btn-danger">Delete</a>
 						</td> -->
 					</tr>
