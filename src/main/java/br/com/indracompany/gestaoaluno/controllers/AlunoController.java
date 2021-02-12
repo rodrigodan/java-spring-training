@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.indracompany.gestaoaluno.model.Aluno;
@@ -53,4 +54,19 @@ public class AlunoController {
     	alunos.save(aluno);
     	return ResponseEntity.ok(aluno);
     }
+   
+   @PostMapping(value = "/alunos")
+   public String delete(Aluno aluno) {
+       this.alunos.save(aluno);
+       return "redirect:/alunos";
+   }
+   
+   
+	@GetMapping("/alunos/{id}")
+	public String deleteAluno(@PathVariable (value = "id") long id) {
+		
+		// call delete employee method 
+		this.alunos.deleteById(id);
+		return "redirect:/alunos";
+	}
 }

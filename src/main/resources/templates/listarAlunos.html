@@ -18,24 +18,24 @@
 			<h1 class="panel-title">Lista de Alunos</h1>
 		</div>
 		<div class="panel-body">
-			
+
 			<form class="form-inline" method="POST" th:action="@{/alunos}"
 				th:object="${aluno}" style="margin: 20px 0">
-				
+
 				<div class="form-group">
 					<input type="text" class="form-control" id="nome"
-						th:field="*{nome}" placeholder="Nome" /> 
-						
-					<input type="text"
+						th:field="*{nome}" placeholder="Nome" /> <input type="text"
 						class="form-control" id="email" th:field="*{email}"
-						placeholder="E-mail" />
-						
-					<input type="text"
-						class="form-control" id="nota" th:field="*{nota}"
-						placeholder="Nota" />
+						placeholder="E-mail" /> <input type="text" class="form-control"
+						id="nota" th:field="*{nota}" placeholder="Nota" />
 
 					<button type="submit" class="btn btn-primary">Adicionar</button>
 				</div>
+			</form>
+
+			<form th:object="${aluno}" th:action="@{/alunos}" th:method="delete">
+				<input name="id" th:value="${aluno.id}" value="delete">
+				<button type="submit">Delete</button>
 			</form>
 
 			<table class="table">
@@ -51,6 +51,9 @@
 						<td th:text="${aluno.nome}"></td>
 						<td th:text="${aluno.email}"></td>
 						<td th:text="${aluno.nota}"></td>
+						<td><a th:href="@{/alunos/${aluno.id}}" class="btn btn-danger">Delete</a></td>
+						<!-- <td><a th:href="@{/alunos/${aluno.id}}" class="btn btn-danger">Delete</a>
+						</td> -->
 					</tr>
 				</tbody>
 			</table>
