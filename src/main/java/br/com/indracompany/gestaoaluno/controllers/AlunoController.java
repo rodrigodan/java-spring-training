@@ -1,5 +1,7 @@
 package br.com.indracompany.gestaoaluno.controllers;
 
+import org.springframework.ui.Model;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,6 +70,31 @@ public class AlunoController {
 		
 		// call delete employee method 
 		this.alunos.deleteById(id);
+		return "redirect:/alunos";
+	}
+	
+	@GetMapping("/alunos/update/{id}")
+	public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+		
+		// get employee from the service
+		Aluno aluno = alunos.findById(id).get();
+		//Employee employee = employeeService.getEmployeeById(id);
+		
+		// set employee as a model attribute to pre-populate the form
+		model.addAttribute("aluno", aluno);
+		
+		return "new_aluno";
+		
+		/*ModelAndView retorno = new ModelAndView("new_aluno");
+		return retorno;*/
+		//return "redirect:/alunos";
+	}
+	
+	
+	@PostMapping("/updateAlunos")
+	public String saveEmployee(@ModelAttribute("aluno") Aluno aluno) {
+		// save employee to database
+		alunos.save(aluno);
 		return "redirect:/alunos";
 	}
 }
