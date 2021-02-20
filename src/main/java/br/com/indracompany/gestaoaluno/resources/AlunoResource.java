@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.indracompany.gestaoaluno.model.Aluno;
 import br.com.indracompany.gestaoaluno.repository.Alunos;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api
 @RestController
 @RequestMapping("/api/alunos")
 public class AlunoResource {
@@ -25,17 +28,19 @@ public class AlunoResource {
 	@Autowired
 	private Alunos alunosRepository;
 	
+	@ApiOperation("Cadastra alunos, um por vez.")
 	@PostMapping
 	public ResponseEntity<Aluno>save(@RequestBody Aluno aluno){
 		alunosRepository.save(aluno);
 		return new ResponseEntity<>(aluno, HttpStatus.OK);
 	}
+	@ApiOperation("Consulta todos os alunos, retornando uma lista.")
 	@GetMapping
     public ResponseEntity<List<Aluno>> getAll(){
         List<Aluno> alunos = alunosRepository.findAll();
         return new ResponseEntity<>(alunos, HttpStatus.OK);
     }
-	
+	@ApiOperation("Consulta um aluno pelo ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Aluno>> getById(@PathVariable Long id){
 		Optional<Aluno> aluno;
@@ -47,7 +52,7 @@ public class AlunoResource {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	@ApiOperation("Exclui um aluno pelo ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Optional<Aluno>> deleteById(@PathVariable Long id){
 		try {			
@@ -58,7 +63,7 @@ public class AlunoResource {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	@ApiOperation("Atualiza um aluno pelo ID")
 	@PutMapping("/{id}")
 	public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody Aluno alunoAtualizado){
 		return alunosRepository.findById(id)
